@@ -11,14 +11,14 @@ with open(f'model/home.pkl', 'rb') as f:
     hmodel = pickle.load(f)
 
 
-def predict(request):
+def predict(request,week):
 
     data = pd.read_csv('model/merged_mldata2020v2.csv',delimiter = ',')
     outputs = []
     games = data.drop(columns =['vscore', 'hscore','winner','ou',"sWinner","fspread","fscore","vospread","vcspread"])
     games = pd.DataFrame(games)
     
-    weekfilter = games['week'] == 8
+    weekfilter = games['week'] == week
 
     games = games[weekfilter]
 

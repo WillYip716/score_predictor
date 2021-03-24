@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
- 
+import { useParams } from 'react-router-dom';
+
 /*
 {
         "index": 105,
@@ -14,24 +15,24 @@ import axios from 'axios';
     }
 */
 
-function Home() {
+function Week() {
   const [data, setData] = useState([]);
- 
+  const params = useParams().week;
 
   useEffect(()=>{
       async function fetchdata(){
-          axios.get('/predict/10')
+          
+          axios.get('/predict/'+ params)
           .then(res => {
               const games = res.data;
               setData(games);
           })
       }
       fetchdata();
-  },[])
+  },[params])
  
   return (
     <ul style={{textAlign:"center"}}>
-      <h2>Latest Predictions</h2>
       {data.map(item => (
         <div key={item.index}>
             <h4>{item.vteam} at {item.hteam}</h4>
@@ -42,4 +43,4 @@ function Home() {
   );
 }
  
-export default Home;
+export default Week;
