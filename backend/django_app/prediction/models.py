@@ -3,13 +3,10 @@ from django.db import models
 
 # Create your models here.
 
-class Team(models.Model):
-    name = models.CharField(max_length=255)
-
 class Game(models.Model):
     week = models.IntegerField()
-    vteam = models.ForeignKey(Team, on_delete=models.CASCADE)
-    hteam = models.ForeignKey(Team, on_delete=models.CASCADE)
+    vteam = models.CharField(max_length=255)
+    hteam = models.CharField(max_length=255)
     temp = models.IntegerField()
     wind_mph = models.IntegerField()
     vdflg = models.IntegerField()
