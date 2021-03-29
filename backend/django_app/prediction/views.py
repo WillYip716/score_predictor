@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import json
 from django.http import HttpResponse
+from prediction.models import Game
 
 with open(f'model/visitor.pkl', 'rb') as f:
     vmodel = pickle.load(f)
@@ -11,21 +12,22 @@ with open(f'model/home.pkl', 'rb') as f:
     hmodel = pickle.load(f)
 
 
-def predict(request,week):
+def predict(request, week):
 
-    data = pd.read_csv('model/merged_mldata2020v2.csv',delimiter = ',')
-    outputs = []
-    games = data.drop(columns =['vscore', 'hscore','winner','ou',"sWinner","fspread","fscore","vospread","vcspread"])
-    games = pd.DataFrame(games)
+    games = pd.DataFrame(list(Game.objects.filter(week=week).values()))
+    #data = pd.read_csv('model/merged_mldata2020v2.csv',delimiter = ',')
+    #games = data.drop(columns =['vscore', 'hscore','winner','ou',"sWinner","fspread","fscore","vospread","vcspread"])
+    #games = pd.DataFrame(games)
     
-    weekfilter = games['week'] == week
+    
+    #weekfilter = games['week'] == week
 
-    games = games[weekfilter]
+    #games = games[weekfilter]
 
     #data.corr()
     columnheads = ['temp','wind_mph','vdflg','hdflg','divgame','nsite','hospread','ouopen','hcspread','ouclose','vTOTAL.DVOA','vTOTAL.RNK','vOFF.RNK','vOFF.DVOA','vDEF.RNK','vDEF.DVOA','vST.RNK','vST.DVOA','hTOTAL.DVOA','hTOTAL.RNK','hOFF.RNK','hOFF.DVOA','hDEF.RNK','hDEF.DVOA','hST.RNK','hST.DVOA','vtsw','vtsl','vtst','htsw','htsl','htst','vtw','vtl','vtt','vts','htw','htl','htt','hts']
 
-    games = np.hsplit(games,[3])
+    games = np.hsplit(games,[4])
     tw = games[0]
     pdata = games[1]
     input_variables = pd.DataFrame(pdata, columns = columnheads,dtype=float)

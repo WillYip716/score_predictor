@@ -7,7 +7,7 @@ function NavbarComp(){
     return(
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand href="/">NFL Score Predictor</Navbar.Brand>
-            <Nav>
+            <Nav style={{marginRight:"auto"}}>
                 <NavDropdown title="Week" id="collasible-nav-dropdown">
                     <NavDropdown.Item href="/week/1">1</NavDropdown.Item>
                     <NavDropdown.Item href="/week/2">2</NavDropdown.Item>
